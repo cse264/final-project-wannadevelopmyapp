@@ -92,7 +92,7 @@ if(document.title == "Sign Up Page"){
       //const myJson = await response.json(); //extract JSON from the http response
       // print response to console
       console.log(file);
-      window.location.replace(file.url);
+      window.location.replace('http://localhost:3000/');
     }
   //POST - /films
   signUserUp();

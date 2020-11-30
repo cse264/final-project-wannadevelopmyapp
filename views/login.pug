@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= "Trainer Atlas Login Page"
+
+  body
+      h1= trainers                                               
+      form(action="/users" method="POST")                   
+      p Username:
+        input(type="text" name="filmTitle" id="Username" placeholder="" )
+      p Password:
+        input(type="text" name="Body" id="Password" placeholder="")
+
+  br
+  .ui.green.button#login
+    |   Log In
+  br
+  h1= "Don't have an account? Click below to sign up "
+  br
+  .ui.blue.button#sign_up
+    |   Sign Up
+  br  
+
+
+
+

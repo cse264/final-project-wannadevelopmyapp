@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= "Trainer Atlas Sign Up "
+
+  body
+    h1= trainers                                               
+    form(action="/users" method="POST")     
+    br              
+    p Name:
+    input(type="text" name="users_name" id="users_name" placeholder="" )
+    br
+    br
+    p Username:
+    input(type="text" name="username" id="username2" placeholder="")
+    br
+    br
+    p Password:
+    input(type="text" name="password" id="password2" placeholder="")
+    br
+    br
+    p Email:
+    input(type="text" name="email" id="email2" placeholder="")
+    br
+    br
+    br
+    #user_type2
+    input(type='radio' name='user_type2' id= 'Trainer_type2' value='Trainer')
+    |  Trainer
+    br
+    input(type='radio' name='user_type2' id= 'Trainee_type2' value='Trainee')
+    |  Trainee
+    br
+    br
+    p Bio: 
+    input(type="text" name="bio" id="bio2" placeholder="")
+    br
+  br
+  .ui.blue.button#sign_up2
+    |   Sign Up
+  br  
+
+
+

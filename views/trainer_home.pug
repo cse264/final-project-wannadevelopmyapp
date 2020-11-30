@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= "Home Page for Trainers"
+
+  body
+    p Search Trainers:
+      input(type="text" name="trainer_query" id="trainer_query" placeholder="")
+    br
+    .ui.teal.button#trainer_query
+        |   Search
+    br
+    h1= trainees                                               
+    
+
+
+
+

@@ -1,10 +1,11 @@
 const express = require('express');
-const Film = require('../models/Trainer.js');
+const Trainer = require('../models/Trainer.js');
 const router = express.Router();
 
-/* GET home page. */
+/* GET home page which is actually the login page . */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Front Page' });
+  res.render('login', { title: 'Login Page' });
 });
+
 
 module.exports = router;

@@ -5,10 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const session = require('express-session');
+const passport = require('passport');
+var userProfile;
 
 var indexRouter = require('./routes/index');
 var userRoute = require('./routes/user');
 var signupRouter = require('./routes/signup');
+
 
 //dotenv.config({ path: '.env.example' });
 dotenv.config({ path: '.env' });
@@ -27,9 +31,64 @@ mongoose.connection.on('error', (err) => {
   process.exit();
 });
 
+//subject to change 
+app.set('view engine', 'ejs');
+
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
+}));
+
+app.get('/', function(req, res) {
+  res.render('login', { title: 'Login Page' });
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'pug')
+
+app.get('/success', (req, res) => res.send(userProfile));
+app.get('/error', (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+// index.js
+
+/*  Google AUTH  */
+ 
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GOOGLE_CLIENT_ID = 'our-google-client-id';
+const GOOGLE_CLIENT_SECRET = 'our-google-client-secret';
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+ 
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    // Successful authentication, redirect success.
+    res.redirect('/success');
+  });
+
 
 app.use(logger('dev'));
 app.use(express.json());

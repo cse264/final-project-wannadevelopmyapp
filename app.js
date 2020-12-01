@@ -11,7 +11,6 @@ var userProfile;
 
 var indexRouter = require('./routes/index');
 var userRoute = require('./routes/user');
-var signupRouter = require('./routes/signup');
 
 
 //dotenv.config({ path: '.env.example' });
@@ -40,9 +39,6 @@ app.use(session({
   secret: 'SECRET' 
 }));
 
-app.get('/', function(req, res) {
-  res.render('login', { title: 'Login Page' });
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,7 +47,7 @@ app.use(passport.session());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
 
-app.get('/success', (req, res) => res.send(userProfile));
+//app.get('/home', (req, res) => res.send(userProfile));
 app.get('/error', (req, res) => res.send("error logging in"));
 
 passport.serializeUser(function(user, cb) {
@@ -64,10 +60,8 @@ passport.deserializeUser(function(obj, cb) {
 // index.js
 
 /*  Google AUTH  */
- 
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GOOGLE_CLIENT_ID = 'our-google-client-id';
-const GOOGLE_CLIENT_SECRET = 'our-google-client-secret';
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -85,8 +79,8 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
-    // Successful authentication, redirect success.
-    res.redirect('/success');
+    // Successful authentication, redirect to the home page.
+    res.redirect('/home');
   });
 
 
@@ -99,7 +93,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Specifying Routes the App uses 
 app.use('/', indexRouter);
 app.use('/home', userRoute);
-app.use('/signup', signupRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

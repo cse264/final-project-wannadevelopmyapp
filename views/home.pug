@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= "Home Page for Trainees"
+  h1= "Home Page"
   
   body 
     p Search Trainers:
@@ -9,6 +9,14 @@ block content
     br
     .ui.teal.button#trainer_query
         |   Search
+    br
+    br
+    .ui.blue.button#create_profile
+        |   Create Profile
+    br
+    br
+    .ui.blue.button#edit_profile
+        |   Edit Profile
     br
     h1= trainers                                               
 

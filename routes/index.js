@@ -1,9 +1,13 @@
 const express = require('express');
 const User = require('../models/User.js');
+const passport = require('passport');
+var userProfile;
+
 const router = express.Router();
 
-/* GET home page which is actually the login page . */
+/* LOGIN PAGE . */
 router.get('/', function(req, res, next) {
+  console.log(req);
   res.render('login', { title: 'Login Page' });
 });
 

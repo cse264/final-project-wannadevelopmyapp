@@ -47,7 +47,7 @@ router.get('/', async function(req,res,next){
             }
           });
         }
-
+        
         console.log("THE GOODIES: " , userProfile._json)
         return done(null, userProfile);
     }
@@ -56,6 +56,7 @@ router.get('/', async function(req,res,next){
 
   //console.log(userProfile._json)
   //console.log(userProfile);
+  //users: foundUsers
   res.render('home', { title: 'home' });
 });
 

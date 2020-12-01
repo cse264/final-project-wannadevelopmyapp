@@ -13,5 +13,10 @@ router.get('/', async function(req,res,next){
   res.render('complete_profile', { title: 'complete_profile' });
 });
 
+router.put('/', async function(req,res,next){
+  console.log(req);
+  res.render('complete_profile', { title: 'complete_profile' });
+});
+
 module.exports = router;
 

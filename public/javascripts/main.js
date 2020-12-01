@@ -9,7 +9,6 @@
 window.onload = function () {
 
 console.log(document);
-console.log(document);
 if(document.title == "home"){
   document.getElementById("create_profile").
   addEventListener("click", function(e){
@@ -18,7 +17,7 @@ if(document.title == "home"){
 }
 if(document.title == "complete_profile"){
   //when clicking the create profile button from signup page 
-  document.getElementById("create_profile").
+  document.getElementById("create_profile2").
   addEventListener("click", function(e){
     var Name = document.getElementById("users_name").value;
     var Username = document.getElementById("username2").value;

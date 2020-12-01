@@ -10,7 +10,8 @@ const passport = require('passport');
 var userProfile;
 
 var indexRouter = require('./routes/index');
-var userRoute = require('./routes/user');
+var homeRoute = require('./routes/home');
+var complete_profRouter = require('./routes/complete_profile')
 
 
 //dotenv.config({ path: '.env.example' });
@@ -92,7 +93,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Specifying Routes the App uses 
 app.use('/', indexRouter);
-app.use('/home', userRoute);
+app.use('/home', homeRoute);
+app.use('/complete_profile', complete_profRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

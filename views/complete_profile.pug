@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1= "Complete Profile"
+  
+   body
+    h1= trainers                                               
+    form(action="/users" method="POST")     
+    br              
+    p Name:
+    input(type="text" name="users_name" id="users_name" placeholder="" )
+    br
+    br
+    p Username:
+    input(type="text" name="username" id="username2" placeholder="")
+    br
+    br
+    p Email:
+    input(type="text" name="email" id="email2" placeholder="")
+    br
+    br
+    br
+    #user_type2
+    input(type='radio' name='user_type2' id= 'Trainer_type2' value='Trainer')
+    |  Trainer
+    br
+    input(type='radio' name='user_type2' id= 'Trainee_type2' value='Trainee')
+    |  Trainee
+    br
+    br
+    br
+    #expeience2
+    p Years of Experience: 
+    input(type='radio' name='experience1' id= 'experience1' value='Trainer')
+    |  1
+    br
+    input(type='radio' name='experience2' id= 'experience2' value='Trainee')
+    |  2
+    br
+    input(type='radio' name='experience3-5' id= 'experience3-5' value='Trainer')
+    |  3-5
+    br
+    input(type='radio' name='experience5+' id= 'experience5+' value='Trainee')
+    |  5+
+    br
+    br
+    p Bio: 
+    input(type="text" name="bio" id="bio2" placeholder="")
+    br
+    br
+    p Goals: 
+    input(type="text" name="bio" id="goals2" placeholder="")
+    br
+  br
+  .ui.blue.button#create_profile2
+    |   Create
+  br  

@@ -1,6 +1,5 @@
 const express = require('express');
-const Trainer = require('../models/Trainer.js');
-const Trainee = require('../models/Trainee.js');
+const User = require('../models/User.js');
 const router = express.Router();
 
 /* GET URL Path /signup/.  */
@@ -8,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('sign_up', { title: 'Sign Up Page' });
 });
 
+/** 
 router.post('/', function(req, res, next) {
     var name = req.body.Name ;
     var username = req.body.Username ; 
@@ -79,6 +79,6 @@ router.post('/', function(req, res, next) {
 
 
   });
-
+*/
 
 module.exports = router;

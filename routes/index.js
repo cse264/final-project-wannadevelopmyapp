@@ -1,5 +1,5 @@
 const express = require('express');
-const Trainer = require('../models/Trainer.js');
+const User = require('../models/User.js');
 const router = express.Router();
 
 /* GET home page which is actually the login page . */

@@ -7,8 +7,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
-var trainerRouter = require('./routes/trainer');
-var traineeRouter = require('./routes/trainee');
+var userRoute = require('./routes/user');
 var signupRouter = require('./routes/signup');
 
 //dotenv.config({ path: '.env.example' });
@@ -40,8 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Specifying Routes the App uses 
 app.use('/', indexRouter);
-app.use('/trainers', trainerRouter);
-app.use('/trainees', traineeRouter);
+app.use('/home', userRoute);
 app.use('/signup', signupRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

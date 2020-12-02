@@ -14,6 +14,23 @@ if(document.title == "home"){
   addEventListener("click", function(e){
     window.location.replace('http://localhost:3000/complete_profile');
   });
+
+  document.getElementById("dog-image-btn").
+  addEventListener("click", function(e){
+    let req = new XMLHttpRequest();
+    let url = new URL("https://random.dog/woof.json?ref=apilist.fun");
+    req.open('GET', url);
+    req.responseType = 'json';
+
+    //call function when we get response
+    req.onload = function (){
+      //show/update dog image
+      let image = this.response.url;
+      document.getElementById("dog-image").setAttribute("src", image);
+    };
+    req.send();
+
+  });
 }
 if(document.title == "complete_profile"){
   //when clicking the create profile button from signup page 

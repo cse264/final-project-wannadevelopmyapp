@@ -3,11 +3,14 @@ extends layout
 block content
   h1= "Home Page"
   body 
+    img#dog-image(text-align="right")
     p Search Trainers:
         input(type="text" name="trainer_query" id="trainer_query" placeholder="")
     br
     .ui.teal.button#trainer_query
         |   Search
+    .ui.green.button#dog-image-btn
+        |   Dog
     br
     br
     .ui.blue.button#create_profile

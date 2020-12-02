@@ -19,7 +19,7 @@ if(document.title == "complete_profile"){
   //when clicking the create profile button from signup page 
   document.getElementById("create_profile2").
   addEventListener("click", function(e){
-    var Name = document.getElementById("users_name").value;
+    var Name = document.getElementById("users_name2").value;
     var Username = document.getElementById("username2").value;
     var Email = document.getElementById("email2").value;
     let UserType = null;
@@ -47,13 +47,13 @@ if(document.title == "complete_profile"){
     var Bio = document.getElementById("bio2").value;
     var Goals = document.getElementById("goals2").value;
 
-    let userObject = {"Username": Username, "Name":Name, "Email":Email , "UserType": UserType, "Bio": Bio, "Goals": Goals}
+    let userObject = {"Username": Username, "Name":Name, "Email":Email , "UserType": UserType, "Experience":Experience, "Bio": Bio, "Goals": Goals}
     console.log(userObject)
     
     //AJAX POST REQUEST 
     const addUser = async () => {
-      const response = await fetch('http://localhost:3000/home/complete_profile', {
-        method: 'POST',
+      const response = await fetch('http://localhost:3000/complete_profile', {
+        method: 'PUT',
         body: JSON.stringify(userObject), // string or object
         headers: {
           'Content-Type': 'application/json'
@@ -63,10 +63,10 @@ if(document.title == "complete_profile"){
       //const myJson = await response.json(); //extract JSON from the http response
       // print response to console
       console.log(file);
-      window.location.replace('http://localhost:3000/home');
     }
   //POST - /films
   addUser();
+  //window.location.replace('http://localhost:3000/home');
   },false);
   }
 

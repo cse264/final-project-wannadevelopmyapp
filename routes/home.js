@@ -31,6 +31,7 @@ router.get('/', async function(req,res,next){
                 Bio: "N/A", 
                 UserType: "N/A",
                 Experience: 0 , 
+                Goals: "N/A",
                 Clients: {},
 
               };

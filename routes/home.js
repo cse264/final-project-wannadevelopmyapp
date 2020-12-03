@@ -7,6 +7,25 @@ const dotenv = require('dotenv');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
+
+router.delete('/', async function(req,res,next){
+  console.log("DELETE REQUEST FOR EMAIL: ", req.user.Email);
+  const filter = {Email: req.user.Email};
+  User.deleteOne(filter, function(err,result){
+    //case for ambiguous error
+    if(err){
+      console.err(err);
+    }
+    
+    else {
+        console.log("SUCCESSFULL DELETION OF : ", req.user.Email);
+        res.json(result);
+    }
+  });
+});
+
+module.exports = router;
+
 //app.use('/home', homeRoute);
 /* GET URL Path /home/.  
 router.get('/', isLoggedIn, async function(req,res,next){
@@ -74,9 +93,3 @@ router.get('/', isLoggedIn, async function(req,res,next){
   res.render('home', { title: 'home' , trainers: trainer_usernames, trainees: trainee_usernames});
 });
 */
-router.delete('/', async function(res,req,next){
-
-});
-
-module.exports = router;
-

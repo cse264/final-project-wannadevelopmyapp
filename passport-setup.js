@@ -26,7 +26,7 @@ passport.use(new GoogleStrategy({
 },
 function(accessToken, refreshToken, profile, done) {
     userProfile=profile;
-    console.log(userProfile);
+    //console.log(userProfile);
     const filter = {Email: userProfile._json.email}
     console.log(filter);
     User.countDocuments(filter,async function(err,count){
@@ -55,7 +55,7 @@ function(accessToken, refreshToken, profile, done) {
               
         }
     });
-    console.log("THE GOODIES: " , userProfile._json)
+    //console.log("THE GOODIES: " , userProfile._json)
     return done(null, userProfile);
 }
 ));

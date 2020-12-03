@@ -46,8 +46,10 @@ app.use(session({
 
 // Auth middleware that checks if the user is logged in
 const isLoggedIn = (req, res, next) => {
-  console.log(req.user);
-  if (req.user) {
+  console.log("LOGIN FUNC REQ:", req);
+  console.log("SESSION IS : ", req.session);
+  console.log("SESSION.Passport IS : ", req.session.passport);
+  if (req.session!=null) {
       next();
   } else {
       res.sendStatus(401);
@@ -64,6 +66,13 @@ app.set('view engine', 'pug')
 
 //app.get('/home', (req, res) => res.send(userProfile));
 app.get('/error', (req, res) => res.send("error logging in"));
+
+
+/* LOGIN PAGE . */
+app.get('/', function(req, res, next) {
+  //console.log(req);
+  res.render('login', { title: 'Login Page' });
+});
 
 //app.use('/home', homeRoute);
 /* GET URL Path /home/.  */
@@ -90,14 +99,23 @@ app.get('/home',isLoggedIn, async function(req,res,next){
   res.render('home', { title: 'home' });
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
+//GOOGLE OAUTH 
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     // Successful authentication, redirect to the home page.
     res.redirect('/home');
   });
 
+//route for logout 
+app.get('/logout', (req, res) => {
+  req.session = null;
+  //console.log("LOGOUT REQ: " ,req);
+  //console.log("SESSION.Passport IS : ", req.session.passport);
+  req.logout();
+  res.redirect('/');
+});
+  
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -106,6 +124,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Specifying Routes the App uses 
+//Not crucial for rendering the page
 app.use('/', indexRouter);
 app.use('/home', homeRoute);
 app.use('/complete_profile', complete_profRouter);

@@ -10,11 +10,13 @@ window.onload = function () {
 
 console.log(document);
 if(document.title == "home"){
+  //button event for creating a profile 
   document.getElementById("create_profile").
   addEventListener("click", function(e){
     window.location.replace('http://localhost:3000/complete_profile');
   });
 
+  //button event for displaying a dog 
   document.getElementById("dog-image-btn").
   addEventListener("click", function(e){
     let req = new XMLHttpRequest();
@@ -30,6 +32,34 @@ if(document.title == "home"){
     };
     req.send();
 
+  });
+
+  //button event for deleting a profile 
+  document.getElementById("delete_profile").
+  addEventListener("click", function(e){
+    //AJAX POST REQUEST 
+    const addUser = async () => {
+      const response = await fetch('http://localhost:3000/home', {
+        method: 'DELETE',
+        //body: JSON.stringify(userObject), // string or object
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const file = await response ;
+      //const myJson = await response.json(); //extract JSON from the http response
+      // print response to console
+      console.log(file);
+    }
+  //POST - /films
+  addUser();
+  //window.location.replace('http://localhost:3000/home');
+  },false);
+
+  //button event for logging out 
+  document.getElementById("logout").
+  addEventListener("click", function(e){
+    window.location.replace('http://localhost:3000/logout');
   });
 }
 if(document.title == "complete_profile"){

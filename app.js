@@ -45,37 +45,32 @@ app.use(session({
 }));
 
 // Auth middleware that checks if the user is logged in
-const isLoggedIn = (req, res, next) => {
-  console.log("LOGIN FUNC REQ:", req);
-  console.log("SESSION IS : ", req.session);
-  console.log("SESSION.Passport IS : ", req.session.passport);
-  if (req.session!=null) {
+// Auth middleware that checks if the user is logged in
+function isLoggedIn(req, res, next) {
+  console.log("Verify Logged IN req:", req);
+  if (req.user) {
       next();
   } else {
       res.sendStatus(401);
   }
 }
 
-app.use(passport.initialize());
 //tells the app to use sessions to authenthicate
+app.use(passport.initialize());
 app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
 
-//app.get('/home', (req, res) => res.send(userProfile));
+// ROUTES 
 app.get('/error', (req, res) => res.send("error logging in"));
-
-
 /* LOGIN PAGE . */
 app.get('/', function(req, res, next) {
   //console.log(req);
   res.render('login', { title: 'Login Page' });
 });
-
-//app.use('/home', homeRoute);
-/* GET URL Path /home/.  */
+/* HOME PAGE.  */
 app.get('/home',isLoggedIn, async function(req,res,next){
   /** 
   //console.log(userProfile._json)
@@ -96,7 +91,16 @@ app.get('/home',isLoggedIn, async function(req,res,next){
   console.log(trainer_usernames);
   console.log(trainee_usernames); */
   //trainers: trainer_usernames, trainees: trainee_usernames
+  console.log("HOME PAGE REQ:", req);
   res.render('home', { title: 'home' });
+});
+
+/* COMPLETE_PROFILE */
+app.get('/complete_profile',isLoggedIn,async function(req,res,next){
+  //console.log(req);
+  console.log(req.sessionID);
+  console.log(req.user);
+  res.render('complete_profile', { title: 'complete_profile' });
 });
 
 //GOOGLE OAUTH 
@@ -109,9 +113,8 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 //route for logout 
 app.get('/logout', (req, res) => {
-  req.session = null;
-  //console.log("LOGOUT REQ: " ,req);
-  //console.log("SESSION.Passport IS : ", req.session.passport);
+  console.log("LOGOUT REQ: " ,req);
+  console.log("LOGOUT session.Passport IS : ", req.session.passport);
   req.logout();
   res.redirect('/');
 });

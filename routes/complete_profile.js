@@ -7,14 +7,7 @@ const dotenv = require('dotenv');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
-/* GET URL Path /complete_profile/.  */
-router.get('/', async function(req,res,next){
-  //console.log(req);
-  console.log(req.sessionID);
-  console.log(req.user);
-  res.render('complete_profile', { title: 'complete_profile' });
-});
-
+/* PUT URL Path /complete_profile/.  */
 router.put('/', async function(req,res,next){
   //user input 
   console.log(req);

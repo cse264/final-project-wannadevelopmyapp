@@ -6,7 +6,11 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const session = require('express-session');
+
+//const cookieSession = require("cookie-session")
+var findOrCreate = require('mongoose-findorcreate');
 const passport = require('passport');
+require('./passport-setup')
 var userProfile;
 
 var indexRouter = require('./routes/index');
@@ -40,8 +44,18 @@ app.use(session({
   secret: 'SECRET' 
 }));
 
+// Auth middleware that checks if the user is logged in
+const isLoggedIn = (req, res, next) => {
+  console.log(req.user);
+  if (req.user) {
+      next();
+  } else {
+      res.sendStatus(401);
+  }
+}
 
 app.use(passport.initialize());
+//tells the app to use sessions to authenthicate
 app.use(passport.session());
 
 // view engine setup
@@ -51,34 +65,34 @@ app.set('view engine', 'pug')
 //app.get('/home', (req, res) => res.send(userProfile));
 app.get('/error', (req, res) => res.send("error logging in"));
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
-// index.js
-
-/*  Google AUTH  */
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL
-  },
-  function(accessToken, refreshToken, profile, done) {
-      userProfile=profile;
-      return done(null, userProfile);
+//app.use('/home', homeRoute);
+/* GET URL Path /home/.  */
+app.get('/home',isLoggedIn, async function(req,res,next){
+  /** 
+  //console.log(userProfile._json)
+  //console.log(userProfile);
+  //users: foundUsers
+  const trainer_filter = {UserType : "Trainer"};
+  const trainee_filter = {UserType : "Trainee"};
+  let all_Trainers = await User.find(trainer_filter);
+  let all_Trainees = await User.find(trainee_filter);
+  let trainer_usernames = [];
+  let trainee_usernames = [];
+  for(let i=0; i < all_Trainers.length;i++){
+    trainer_usernames.push(all_Trainers[i].Username)
   }
-));
+  for(let i=0; i < all_Trainees.length;i++){
+    trainee_usernames.push(all_Trainees[i].Username)
+  }
+  console.log(trainer_usernames);
+  console.log(trainee_usernames); */
+  //trainers: trainer_usernames, trainees: trainee_usernames
+  res.render('home', { title: 'home' });
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
  
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/error' }),
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     // Successful authentication, redirect to the home page.
     res.redirect('/home');

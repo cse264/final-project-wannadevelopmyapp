@@ -8,8 +8,8 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 //app.use('/home', homeRoute);
-/* GET URL Path /home/.  */
-router.get('/', async function(req,res,next){
+/* GET URL Path /home/.  
+router.get('/', isLoggedIn, async function(req,res,next){
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -72,6 +72,10 @@ router.get('/', async function(req,res,next){
   console.log(trainer_usernames);
   console.log(trainee_usernames);
   res.render('home', { title: 'home' , trainers: trainer_usernames, trainees: trainee_usernames});
+});
+*/
+router.delete('/', async function(res,req,next){
+
 });
 
 module.exports = router;

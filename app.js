@@ -10,7 +10,8 @@ const session = require('express-session');
 //const cookieSession = require("cookie-session")
 var findOrCreate = require('mongoose-findorcreate');
 const passport = require('passport');
-require('./passport-setup')
+require('./passport-setup');
+const User = require('./models/User.js');
 var userProfile;
 
 var indexRouter = require('./routes/index');
@@ -47,7 +48,7 @@ app.use(session({
 // Auth middleware that checks if the user is logged in
 // Auth middleware that checks if the user is logged in
 function isLoggedIn(req, res, next) {
-  console.log("Verify Logged IN req:", req);
+  //console.log("Verify Logged IN req:", req);
   if (req.user) {
       next();
   } else {
@@ -72,7 +73,6 @@ app.get('/', function(req, res, next) {
 });
 /* HOME PAGE.  */
 app.get('/home',isLoggedIn, async function(req,res,next){
-  /** 
   //console.log(userProfile._json)
   //console.log(userProfile);
   //users: foundUsers
@@ -89,20 +89,34 @@ app.get('/home',isLoggedIn, async function(req,res,next){
     trainee_usernames.push(all_Trainees[i].Username)
   }
   console.log(trainer_usernames);
-  console.log(trainee_usernames); */
+  console.log(trainee_usernames); 
   //trainers: trainer_usernames, trainees: trainee_usernames
-  console.log("HOME PAGE REQ:", req);
-  res.render('home', { title: 'home' });
+  //console.log("HOME PAGE REQ:", req);
+  res.render('home', { title: 'home' , trainers: trainer_usernames, trainees: trainee_usernames});
 });
 
 /* COMPLETE_PROFILE */
 app.get('/complete_profile',isLoggedIn,async function(req,res,next){
   //console.log(req);
-  console.log(req.sessionID);
-  console.log(req.user);
+  //console.log(req.sessionID);
+  console.log("complete_profile user: ", req.user);
   res.render('complete_profile', { title: 'complete_profile' });
 });
 
+/* PROFILE PAGE . */
+app.get('/profile_page',isLoggedIn, function(req, res, next) {
+  console.log("PROFILE PAGE USER:" , req.user);
+  //name:  , username:  , userType:  ,bio:  ,goals:  , experience:  ,clients:  , 
+  res.render('profile_page', { title: 'Profile Page',
+  name: req.user.Name + "'s Profile Page", 
+  username: req.user.Username, 
+  userType:  req.user.UserType, 
+  email: req.user.Email,
+  bio:req.user.Bio,
+  goals: req.user.Goals, 
+  experience: req.user.Experience,
+  clients: req.user.Clients, })
+});
 //GOOGLE OAUTH 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }),
@@ -113,8 +127,8 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 //route for logout 
 app.get('/logout', (req, res) => {
-  console.log("LOGOUT REQ: " ,req);
-  console.log("LOGOUT session.Passport IS : ", req.session.passport);
+  //console.log("LOGOUT REQ: " ,req);
+  //console.log("LOGOUT session.Passport IS : ", req.session.passport);
   req.logout();
   res.redirect('/');
 });

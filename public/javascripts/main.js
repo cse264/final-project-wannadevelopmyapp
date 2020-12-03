@@ -38,7 +38,7 @@ if(document.title == "home"){
   document.getElementById("delete_profile").
   addEventListener("click", function(e){
     //AJAX POST REQUEST 
-    const addUser = async () => {
+    const deleteUser = async () => {
       const response = await fetch('http://localhost:3000/home', {
         method: 'DELETE',
         //body: JSON.stringify(userObject), // string or object
@@ -52,8 +52,8 @@ if(document.title == "home"){
       console.log(file);
     }
   //POST - /films
-  addUser();
-  //window.location.replace('http://localhost:3000/home');
+  deleteUser();
+  window.location.replace('http://localhost:3000/');
   },false);
 
   //button event for logging out 
@@ -61,6 +61,13 @@ if(document.title == "home"){
   addEventListener("click", function(e){
     window.location.replace('http://localhost:3000/logout');
   });
+
+  //button event for viewing profile 
+  document.getElementById("view_profile").
+  addEventListener("click", function(e){
+    window.location.replace('http://localhost:3000/profile_page');
+  });
+  
 }
 if(document.title == "complete_profile"){
   //when clicking the create profile button from signup page 
@@ -97,8 +104,8 @@ if(document.title == "complete_profile"){
     let userObject = {"Username": Username, "Name":Name, "Email":Email , "UserType": UserType, "Experience":Experience, "Bio": Bio, "Goals": Goals}
     console.log(userObject)
     
-    //AJAX POST REQUEST 
-    const addUser = async () => {
+    //AJAX PUT REQUEST 
+    const editProf = async () => {
       const response = await fetch('http://localhost:3000/complete_profile', {
         method: 'PUT',
         body: JSON.stringify(userObject), // string or object
@@ -111,68 +118,10 @@ if(document.title == "complete_profile"){
       // print response to console
       console.log(file);
     }
-  //POST - /films
-  addUser();
-  //window.location.replace('http://localhost:3000/home');
+  //PUT- /films
+  editProf();
+  window.location.replace('http://localhost:3000/home');
   },false);
   }
 
-
-/** 
-if(document.title == "Login Page"){
-  //when clicking the login button 
-  document.getElementById("login").
-  addEventListener("click", function(e){
-    var Username = document.getElementById("Username").value;
-    var Password = document.getElementById("Password").value;
-    console.log("Username: ", Username ,"  Password: ", Password )
-    //AJAX GET REQUEST 
-    const getUser = async () => {
-      const response = await fetch('http://localhost:3000/trainers', {
-        method: 'GET',
-        //body: JSON.stringify(filmObject), // string or object
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const myJson = await response.json(); //extract JSON from the http response
-      // print response to console
-      console.log(myJson);
-    }
-  //GET -- localhost:3000/
-  getUser();
-  },false);
-  
-  //when clicking the sign up button from login page 
-  document.getElementById("sign_up").
-  addEventListener("click", function(e){
-    //AJAX GET REQUEST 
-    const loadSignupPage = async () => {
-      const response = await fetch('http://localhost:3000/signup', {
-        method: 'GET',
-        //body: JSON.stringify(filmObject), // string or object
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const file = await response ;
-      //const myJson = await response.json(); //extract JSON from the http response
-      // print response to console
-      console.log(file);
-      window.location.replace(file.url);
-    }
-  //POST - /films
-  loadSignupPage();
-  },false);
-  }
-*/  
-/*
-//when clicking the search bar to query for trainees on trainer homepage
-document.getElementById("login").
-addEventListener("click", function(e){});
-
-//when clicking the search bar to query for trainers on trainee homepage
-document.getElementById("login").
-addEventListener("click", function(e){});
-**/
 };

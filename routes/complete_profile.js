@@ -10,10 +10,11 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 /* PUT URL Path /complete_profile/.  */
 router.put('/', async function(req,res,next){
   //user input 
-  console.log(req);
+  console.log("PUT REQ:" , req);
+  console.log("PUT USER EMAIL:" , req.session.passport.user);
   var name = req.body.Name;
   var username = req.body.Username;
-  var email = req.body.Email;
+  //var email = req.body.Email;
   var user_type = req.body.UserType;
   var experience = req.body.Experience;
   var goals = req.body.Goals 
@@ -22,7 +23,7 @@ router.put('/', async function(req,res,next){
   var UserObject = {
     Username: username, 
     Name: name, 
-    Email: email, 
+    Email: req.session.passport.user, 
     Bio: bio, 
     UserType: user_type,
     Experience: experience , 
@@ -31,7 +32,7 @@ router.put('/', async function(req,res,next){
   };
   //filter for the query
   const filter = {Email: email};
-  console.log(UserObject);
+  //console.log(UserObject);
   User.countDocuments(filter,async function(err, count){
     if(err){
       console.log(error);

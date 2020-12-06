@@ -13,7 +13,7 @@ if(document.title == "home"){
   //button event for creating a profile 
   document.getElementById("create_profile").
   addEventListener("click", function(e){
-    window.location.replace('https://trainer-atlas.herokuapp.com/complete_profile');
+    window.location.replace('https://trainer-atlas-1.herokuapp.com/complete_profile');
   });
 
   //button event for displaying a dog 
@@ -39,7 +39,7 @@ if(document.title == "home"){
   addEventListener("click", function(e){
     //AJAX POST REQUEST 
     const deleteUser = async () => {
-      const response = await fetch('https://trainer-atlas.herokuapp.com/home', {
+      const response = await fetch('https://trainer-atlas-1.herokuapp.com/home', {
         method: 'DELETE',
         //body: JSON.stringify(userObject), // string or object
         headers: {
@@ -53,19 +53,19 @@ if(document.title == "home"){
     }
   //POST - /films
   deleteUser();
-  window.location.replace('https://trainer-atlas.herokuapp.com/');
+  window.location.replace('https://trainer-atlas-1.herokuapp.com/');
   },false);
 
   //button event for logging out 
   document.getElementById("logout").
   addEventListener("click", function(e){
-    window.location.replace('https://trainer-atlas.herokuapp.com/logout');
+    window.location.replace('https://trainer-atlas-1.herokuapp.com/logout');
   });
 
   //button event for viewing profile 
   document.getElementById("view_profile").
   addEventListener("click", function(e){
-    window.location.replace('https://trainer-atlas.herokuapp.com/profile_page');
+    window.location.replace('https://trainer-atlas-1.herokuapp.com/profile_page');
   });
   
 }
@@ -105,7 +105,7 @@ if(document.title == "complete_profile"){
     
     //AJAX PUT REQUEST 
     const editProf = async () => {
-      const response = await fetch('https://trainer-atlas.herokuapp.com/complete_profile', {
+      const response = await fetch('https://trainer-atlas-1.herokuapp.com/complete_profile', {
         method: 'PUT',
         body: JSON.stringify(userObject), // string or object
         headers: {
@@ -119,7 +119,7 @@ if(document.title == "complete_profile"){
     }
   //PUT- /films
   editProf();
-  //window.location.replace('https://trainer-atlas.herokuapp.com/home');
+  window.location.replace('https://trainer-atlas-1.herokuapp.com/home');
   },false);
   }
 

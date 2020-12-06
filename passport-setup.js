@@ -22,7 +22,7 @@ passport.deserializeUser(function(email, done) {
 passport.use(new GoogleStrategy({
     clientID: '1075455955062-2v511hpbogaplt0a69bks8qq3surs03t.apps.googleusercontent.com',
     clientSecret: '8BceidzF-GOVxh7jWc4tedik',
-    callbackURL: 'https://trainer-atlas.herokuapp.com/auth/google/callback'
+    callbackURL: 'https://trainer-atlas-1.herokuapp.com/auth/google/callback'
 },
 function(accessToken, refreshToken, profile, done) {
     userProfile=profile;
